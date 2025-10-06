@@ -1,47 +1,5 @@
-class TaskManager {
-  List<String> tasks = [];
-
-  void addTask(String task) {
-    tasks.add(task);
-    print('Task added: $task');
-  }
-
-  void readAllTasks() {
-    print('All Tasks:');
-
-    for (var task in tasks) {
-      print('ID: ${tasks.indexOf(task)} — $task');
-    }
-  }
-
-  void findTask(int id) {
-    if (id >= 0 && id < tasks.length) {
-      print('Task found: ${tasks[id]}');
-    } else {
-      print('Task not found at index: $id');
-    }
-  }
-
-  void updateTask(int id, String newTask) {
-    if (id >= 0 && id < tasks.length) {
-      String oldTask = tasks[id];
-      tasks[id] = newTask;
-      print('Task updated: $oldTask to $newTask');
-    } else {
-      print('Task not found at index: $id');
-    }
-  }
-
-  void deleteTask(int id) {
-    if (id >= 0 && id < tasks.length) {
-      String task = tasks[id];
-      tasks.removeAt(id);
-      print('Task deleted: $task');
-    } else {
-      print('Task not found at index: $id');
-    }
-  }
-}
+import 'dart:io';
+import 'TaskManager.dart';
 
 void main() {
   TaskManager tm = TaskManager();
@@ -56,7 +14,92 @@ void main() {
     print("4. Update Task by ID");
     print("5. Delete Task by ID");
     print("6. Exit");
+    String? choice = stdin.readLineSync();
 
-    
+    switch (choice) {
+      case "1":
+        print("=" * 30);
+        print("Enter task description:");
+        String? task = stdin.readLineSync();
+
+        if (task != null && task.isNotEmpty) {
+          tm.addTask(task);
+        } else {
+          print("Invalid task description.");
+        }
+
+        print("=" * 30);
+
+        break;
+
+      case "2":
+        print("=" * 30);
+        tm.readAllTasks();
+        print("=" * 30);
+        break;
+
+      case "3":
+        print("=" * 30);
+        print("Enter task ID to find: ");
+        String? idStr = stdin.readLineSync();
+        int? id = int.tryParse(idStr ?? "");
+
+        if (id != null) {
+          tm.findTask(id);
+        } else {
+          print("Invalid ID.");
+        }
+
+        print("=" * 30);
+        break;
+
+      case "4":
+        print("=" * 30);
+
+        print("Enter task ID to update: ");
+        String? idStr = stdin.readLineSync();
+        int? id = int.tryParse(idStr ?? "");
+
+        if (id != null) {
+          print("Enter new task description:");
+          String? newTask = stdin.readLineSync();
+
+          if (newTask != null && newTask.isNotEmpty) {
+            tm.updateTask(id, newTask);
+          } else {
+            print("Invalid task description.");
+          }
+        } else {
+          print("Invalid ID.");
+        }
+
+        print("=" * 30);
+
+        break;
+
+      case "5":
+        print("=" * 30);
+
+        print("Enter task ID to delete: ");
+        String? idStr = stdin.readLineSync();
+        int? id = int.tryParse(idStr ?? "");
+
+        if (id != null) {
+          tm.deleteTask(id);
+        } else {
+          print("Invalid ID.");
+        }
+
+        print("=" * 30);
+
+        break;
+
+      default:
+        print("=" * 30);
+        print("Invalid choice. Please try again.");
+        print("=" * 30);
+
+        continue;
+    }
   } while (true);
 }
