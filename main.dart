@@ -94,6 +94,10 @@ void main() {
 
         break;
 
+      case "6":
+        print("Exiting Task Manager. Goodbye!");
+        return;
+
       default:
         print("=" * 30);
         print("Invalid choice. Please try again.");
